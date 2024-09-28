@@ -1,0 +1,28 @@
+.container {
+    padding: 16px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #EEE;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .input {
+    font-size: 32px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #CCC;
+    text-align: center;
+  }
+
+  .button {
+    font-size: 32px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #CCC;
+    cursor: pointer;
+  }
