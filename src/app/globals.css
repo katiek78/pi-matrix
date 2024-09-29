@@ -35,6 +35,21 @@ a {
   text-decoration: none;
 }
 
+select {
+  border-radius: 6px;
+  border: 1px solid var(--gray-alpha-200);
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  max-width: 300px;
+  margin-left: 5px;
+}
+
+.center {
+  text-align: center;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
