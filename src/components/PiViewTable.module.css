@@ -1,0 +1,9 @@
+.seqNum {
+    font-size:2em;font-weight:bold
+}
+
+.digit {
+    font-weight: bold;
+    color: #28a745;
+    letter-spacing: 5px;
+}
