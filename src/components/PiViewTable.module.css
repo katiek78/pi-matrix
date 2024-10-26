@@ -1,5 +1,6 @@
 .seqNum {
-    font-size:2em;font-weight:bold
+    font-size:1em;
+    font-weight:bold
 }
 
 .digit {
@@ -9,6 +10,15 @@
 }
 
 .range {
-    font-size:0.8em;
+    font-size:0.6em;
     font-weight: 200;
+}
+
+@media (min-width: 600px) {
+    .range {
+        font: size 0.8em;
+    }
+    .seqNum {
+        font-size: 2em;
+    }
 }
