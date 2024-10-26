@@ -33,17 +33,13 @@ const Training = () => {
   });
   const [startDigit, setStartDigit] = useState(1);
   const [endDigit, setEndDigit] = useState(piDigits.length);
-  const [tempStartDigit, setTempStartDigit] = useState(startDigit);
-  const [tempEndDigit, setTempEndDigit] = useState(endDigit);
+
   const inputRef = useRef(null);
 
-  const validateAndGenerateQuestion = useCallback(
-    debounce((start, end) => {
-      checkValidRange(); // Ensure you handle this correctly
-      generateQuestion(start, end); // Call your function to generate the question
-    }, 1000), // 1000ms = 1 second
-    []
-  );
+  const validateAndGenerateQuestion = (start, end) => {
+    checkValidRange(); // Ensure you handle this correctly
+    generateQuestion(start, end); // Call your function to generate the question
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -52,7 +48,7 @@ const Training = () => {
   };
 
   const generateBasicQuestion = (startDigit, endDigit) => {
-    checkValidRange();
+    //checkValidRange();
 
     const selectedPiGroups = getSelectedPiGroups(startDigit, endDigit);
 
@@ -122,7 +118,7 @@ const Training = () => {
   };
 
   const generateMatrixQuestion = (startDigit, endDigit) => {
-    checkValidRange();
+    //checkValidRange();
 
     const selection = getSelectedPiGroups(startDigit, endDigit);
 
@@ -190,38 +186,31 @@ const Training = () => {
 
   // Handlers for input changes
   const handleStartDigitChange = (e) => {
-    const value = Number(e.target.value);
-    setTempStartDigit(value);
-    validateAndGenerateQuestion(value, tempEndDigit);
+    const value = e.target.value;
+    const newStartDigit = value;
+    setStartDigit(newStartDigit);
+  };
+
+  const handleStartDigitBlur = () => {
+    console.log("blurring");
+    //const newStartDigit = startDigit === "" ? null : Number(startDigit);
+    validateAndGenerateQuestion(startDigit, endDigit);
   };
 
   const handleEndDigitChange = (e) => {
-    const value = Number(e.target.value);
-    setTempEndDigit(value);
-    validateAndGenerateQuestion(tempStartDigit, value);
+    const value = e.target.value;
+    const newEndDigit = value;
+    setEndDigit(newEndDigit); // Set the end digit to the newEndDigit);
+  };
+
+  const handleEndDigitBlur = () => {
+    console.log("blurring");
+    validateAndGenerateQuestion(startDigit, endDigit);
   };
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setStartDigit(tempStartDigit);
-      setEndDigit(tempEndDigit);
-      generateQuestion(tempStartDigit, tempEndDigit);
-    }, 300); // 300ms delay
-
-    return () => {
-      clearTimeout(handler); // Clean up the timeout on unmount or change
-    };
-  }, [tempStartDigit, tempEndDigit, mode]); // Add temp values to the dependency array
-
-  useEffect(() => {
     generateQuestion(startDigit, endDigit);
-  }, [startDigit, endDigit, mode]); // Include
-
-  useEffect(() => {
-    return () => {
-      validateAndGenerateQuestion.cancel(); // Cancel the debounced function on unmount
-    };
-  }, [validateAndGenerateQuestion]);
+  }, [mode]); // Include
 
   return (
     <>
@@ -253,8 +242,9 @@ const Training = () => {
           <input
             id="startDigit"
             type="number"
-            value={tempStartDigit}
+            value={startDigit}
             onChange={handleStartDigitChange}
+            onBlur={handleStartDigitBlur}
             placeholder="Start digit"
             className={`${styles.input} ${styles.rangeInputs}`}
           />
@@ -266,8 +256,9 @@ const Training = () => {
           <input
             id="endDigit"
             type="number"
-            value={tempEndDigit}
+            value={endDigit}
             onChange={handleEndDigitChange}
+            onBlur={handleEndDigitBlur}
             placeholder="End digit"
             className={`${styles.input} ${styles.rangeInputs}`}
           />

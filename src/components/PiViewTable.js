@@ -14,6 +14,7 @@ const piDigits =
 
 const PiViewTable = () => {
   const [piGroups, setPiGroups] = useState([]);
+  const [groupCounts, setGroupCounts] = useState({});
 
   const getPiGroups = () => {
     // Slice the piDigits into 5-digit groups
@@ -27,28 +28,51 @@ const PiViewTable = () => {
     return piGroups;
   };
 
+  const countGroups = (groups) => {
+    const counts = {};
+    groups.forEach((group) => {
+      counts[group] = (counts[group] || 0) + 1; // Increment the count of each group
+    });
+    return counts;
+  };
+
   useEffect(() => {
-    setPiGroups(getPiGroups());
+    const groups = getPiGroups();
+    setPiGroups(groups);
+    setGroupCounts(countGroups(groups)); // Set group counts based on occurrences
   }, []);
 
   return (
     <>
       <table>
-        <tr>
-          <th>Index</th>
-          {/* <th>Person</th> */}
-          <th>Digits</th>
-          {/* <th>Tested/correct/streak</th> */}
-        </tr>
-        {piGroups &&
-          piGroups.map((group, i) => {
-            return (
-              <tr>
-                <td className={styles.seqNum}>{i + 1}</td>
-                <td className={styles.digit}>{group}</td>
-              </tr>
-            );
-          })}
+        <tbody>
+          <tr>
+            <th>Index</th>
+            {/* <th>Person</th> */}
+            <th>Digits</th>
+            {/* <th>Tested/correct/streak</th> */}
+          </tr>
+          {piGroups &&
+            piGroups.map((group, i) => {
+              const isRepeated = groupCounts[group] > 1;
+              return (
+                <tr
+                  key={i}
+                  style={{
+                    backgroundColor: isRepeated ? "#ffae42" : "transparent",
+                  }}
+                >
+                  <td>
+                    <span className={styles.seqNum}>{i + 1}</span>
+                    <span className={styles.range}>
+                      ({i * 5 + 1}-{i * 5 + 5})
+                    </span>
+                  </td>
+                  <td className={styles.digit}>{group}</td>
+                </tr>
+              );
+            })}
+        </tbody>
       </table>
     </>
   );
