@@ -113,6 +113,7 @@ const Training = () => {
       setStartDigit(1);
     }
     if (endDigit < startDigit || endDigit > piDigits.length) {
+      console.log(endDigit, startDigit, piDigits.length); //got 1000 900 10000
       setEndDigit(piDigits.length);
     }
   };
@@ -187,8 +188,7 @@ const Training = () => {
   // Handlers for input changes
   const handleStartDigitChange = (e) => {
     const value = e.target.value;
-    const newStartDigit = value;
-    setStartDigit(newStartDigit);
+    setStartDigit(Number(value));
   };
 
   const handleStartDigitBlur = () => {
@@ -199,8 +199,7 @@ const Training = () => {
 
   const handleEndDigitChange = (e) => {
     const value = e.target.value;
-    const newEndDigit = value;
-    setEndDigit(newEndDigit); // Set the end digit to the newEndDigit);
+    setEndDigit(Number(value)); // Set the end digit to the newEndDigit);
   };
 
   const handleEndDigitBlur = () => {
